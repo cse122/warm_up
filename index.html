@@ -5,30 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Box Player</title>
     <style>
+        :root {
+            --background-color-light: #f0f0f0;
+            --text-color-light: #333;
+            --button-background-color-light: #007bff;
+            --button-hover-color-light: #0056b3;
+
+            --background-color-dark: #282c34;
+            --text-color-dark: #c9d1d9;
+            --button-background-color-dark: #0d6efd;
+            --button-hover-color-dark: #0a58ca;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark-mode {
+            background-color: var(--background-color-dark);
+            color: var(--text-color-dark);
         }
         h2 {
-            color: #333;
+            transition: color 0.3s ease;
         }
-        #songInput {
+        #songInput, button {
             margin: 20px 0;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ccc;
             font-family: 'Courier New', monospace;
             font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        #songInput {
+            border: 1px solid #ccc;
+            background-color: #fff;
         }
         button {
             cursor: pointer;
-            background-color: #007bff;
+            background-color: var(--button-background-color-light);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -37,7 +59,19 @@
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: var(--button-hover-color-light);
+        }
+        .dark-mode button {
+            background-color: var(--button-background-color-dark);
+        }
+        .dark-mode button:hover {
+            background-color: var(--button-hover-color-dark);
+        }
+        .toggle-dark-mode {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -45,7 +79,29 @@
     <h2>MusicBox Notes! 🎵</h2>
     <textarea id="songInput" rows="10" cols="50" placeholder="Paste ONLY your song 2D array output from composeSong here and we'll try to play the notes for you :D"></textarea><br>
     <button onclick="playSong()">Play Song</button>
+    <button onclick="stopPlaying()">Stop Playing Music</button>
+    <button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
 
     <script src="musicBox.js"></script>
-</body>
+    <script>
+        var activeAudioElements = [];
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', mode);
+        }
+
+        function applyInitialTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            applyInitialTheme();
+        });
+    </script>
+</body> 
 </html>
