@@ -11,7 +11,7 @@ function playSong() {
         const notes = line.trim().split(/\s+/); // Assuming space-separated notes
         for (const note of notes) {
             setTimeout(() => playNote(note), delay);
-            delay += 1000; // Delay between notes, adjust as needed
+            delay += 500; // Delay between notes, adjust as needed
         }
     }
 }
