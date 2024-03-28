@@ -67,41 +67,123 @@
         .dark-mode button:hover {
             background-color: var(--button-hover-color-dark);
         }
-        .toggle-dark-mode {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            cursor: pointer;
+        .switch {
+          position: fixed;
+          bottom: 10px;
+          right: 10px;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+        }
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          transition: .4s;
+        }
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+        input:checked + .slider:before {
+          transform: translateX(26px);
+        }
+        .slider.round {
+          border-radius: 34px;
+        }
+        .slider.round:before {
+          border-radius: 50%;
+        }
+        .dark-mode-label {
+          position: fixed;
+          bottom: 50px; 
+          right: 10px;
+          color: var(--text-color-light);
+          font-size: 14px;
+          font-family: 'Courier New', monospace;
+        }
+
+        .dark-mode .dark-mode-label {
+          color: var(--text-color-dark);
+        }
+        .example-text pre {
+            font-family: 'Courier New', monospace;
+            margin-top: 5px; 
+            margin-bottom: 5px; 
+            color: var(--text-color-light);
+            text-align: left;
+            padding-left: 20px;
+            white-space: pre-wrap;
+        }
+
+        .dark-mode .example-text pre {
+            color: var(--text-color-dark);
         }
     </style>
 </head>
 <body>
     <h2>MusicBox Notes! 🎵</h2>
+    <div class="example-text">
+        <pre>Example:
+C E G E C
+D F♯ A F♯ D
+E G♯ B G♯ E
+F B♭ A G F</pre>
+    </div>
     <textarea id="songInput" rows="10" cols="50" placeholder="Paste ONLY your song 2D array output from composeSong here and we'll try to play the notes for you :D"></textarea><br>
     <button onclick="playSong()">Play Song</button>
     <button onclick="stopPlaying()">Stop Playing Music</button>
-    <button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <label class="switch">
+      <input type="checkbox" id="darkModeToggle">
+      <span class="slider round"></span>
+    </label>
+    <span id="darkModeStatus" class="dark-mode-label">Dark Mode: OFF</span>
 
     <script src="musicBox.js"></script>
     <script>
         var activeAudioElements = [];
 
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const mode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            const isChecked = document.getElementById('darkModeToggle').checked;
+            document.body.classList.toggle('dark-mode', isChecked);
+            const mode = isChecked ? 'dark' : 'light';
             localStorage.setItem('theme', mode);
+            document.getElementById('darkModeStatus').textContent = isChecked ? 'Dark Mode: ON' : 'Dark Mode: OFF';
         }
 
         function applyInitialTheme() {
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
+            const isDarkMode = savedTheme === 'dark';
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            document.getElementById('darkModeToggle').checked = isDarkMode;
+            document.getElementById('darkModeStatus').textContent = isDarkMode ? 'Dark Mode: ON' : 'Dark Mode: OFF';
         }
 
         window.addEventListener('DOMContentLoaded', (event) => {
             applyInitialTheme();
+            document.getElementById('darkModeToggle').addEventListener('change', toggleDarkMode);
         });
     </script>
-</body> 
+</body>
 </html>
