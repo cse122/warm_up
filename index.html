@@ -37,7 +37,7 @@
             transition: color 0.3s ease;
         }
         #songInput, button {
-            margin: 5px 0 20px;
+            margin: 5px 0 15px;
             padding: 10px;
             border-radius: 5px;
             font-family: 'Courier New', monospace;
@@ -144,7 +144,7 @@
         .instruction-text {
             font-family: 'Courier New', monospace;
             color: #666; 
-            margin-bottom: 20px; 
+            margin-bottom: 10px; 
             max-width: 600px;
             text-align: center; 
         }
@@ -167,7 +167,7 @@
         }
 
         #songInput, .instruction-text, .example-text pre {
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .instruction-text, .example-text pre {
@@ -181,7 +181,7 @@
 </head>
 <body>
     <h2>MusicBox Notes! 🎵</h2>
-    <div class="instruction-text">Compose a song with your composeSong method and paste your printed returned song 2D array into the text area below. <br> <br> After you're done, copy and paste your composed song into the reflection (next slide!) for your TA :D </div>
+    <div class="instruction-text">Compose a song with your composeSong method and paste your printed returned song 2D array into the text area below! <br> <br> After you're done, copy and paste your composed song into the reflection (next slide!) for your TA :D </div>
     <div class="example-text">
         <pre>Example:
 C E G E C
@@ -189,7 +189,7 @@ D F♯ A F♯ D
 E G♯ B G♯ E
 F B♭ A G F</pre>
     </div>
-    <textarea id="songInput" rows="20" cols="50" placeholder="Compose a song with your composeSong method and paste your printed returned song 2D array into the text area and click the Play Song button :D"></textarea><br>
+    <textarea id="songInput" rows="20" cols="50" placeholder="Paste your printed returned song 2D array here and click the Play Song button :)"></textarea><br>
     <button onclick="playSong()">Play Song</button>
     <button onclick="stopPlaying()">Stop Playing Music</button>
     <label class="switch">
